@@ -16,6 +16,17 @@ class TestTextEditor(unittest.TestCase):
         except tk.TclError:
             pass
 
+    # Mock messagebox to prevent dialogs during tearDown
+    @classmethod
+    def setUpClass(cls):
+        cls._mock_patcher = patch("main.messagebox.askyesnocancel")
+        cls._mock_ask = cls._mock_patcher.start()
+        cls._mock_ask.return_value = False  # Don't save on shutdown
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._mock_patcher.stop()
+
     # ── State initialization ─────────────────────────────────────────────
 
     def test_initial_filepath_is_none(self):
@@ -143,6 +154,16 @@ class TestTextEditorEdgeCases(unittest.TestCase):
             self.app.destroy()
         except tk.TclError:
             pass
+
+    @classmethod
+    def setUpClass(cls):
+        cls._mock_patcher = patch("main.messagebox.askyesnocancel")
+        cls._mock_ask = cls._mock_patcher.start()
+        cls._mock_ask.return_value = False  # Don't save on shutdown
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._mock_patcher.stop()
 
     @patch("main.filedialog.askopenfilename")
     @patch("main.messagebox.askyesnocancel")
