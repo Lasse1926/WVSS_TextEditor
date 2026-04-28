@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+actor User
+
+rectangle "TextEditor" {
+  usecase "New File" as UC1
+  usecase "Open File" as UC2
+  usecase "Save File" as UC3
+  usecase "Save As" as UC4
+  usecase "Exit" as UC5
+  usecase "Undo" as UC6
+  usecase "Redo" as UC7
+  usecase "Cut" as UC8
+  usecase "Copy" as UC9
+  usecase "Paste" as UC10
+  usecase "Select All" as UC11
+  usecase "View About" as UC12
+  usecase "Edit Text" as UC13
+  usecase "Scroll Text" as UC14
+
+  UC4 --|> UC3 : extends
+  UC5 .> UC3 : <<include>>\n(check unsaved)
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC12
+User --> UC13
+User --> UC14
+@enduml

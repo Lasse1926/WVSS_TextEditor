@@ -196,20 +196,21 @@ class TextEditor(tk.Tk):
         self._update_line_numbers()
 
     def open_file(self, event=None):
+
         if not self._ask_save_if_dirty():
-            return "break"
+            return "unsaved File"
         path = filedialog.askopenfilename(
             title="Open File",
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
         )
         if not path:
-            return "break"
+            return "Path Error"
         try:
             with open(path, "r", encoding="utf-8") as f:
                 content = f.read()
         except OSError as e:
             messagebox.showerror("Error", f"Could not open file:\n{e}")
-            return "break"
+            return "Error"
         self.text.delete("1.0", "end")
         self.text.insert("1.0", content)
         self.text.edit_reset()
